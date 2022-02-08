@@ -103,3 +103,96 @@ export default defineConfig({
 
 ### 3、✨Pinia的简单使用
 
+#### 创建pinia store
+
+```js
+//src/store/index.js
+import { createPinia } from 'pinia'
+
+export const store = createPinia()
+```
+
+#### 引入store
+
+```js
+//main.js
+import { createApp } from 'vue'
+import App from './App.vue'
+import { router } from './router'
+import { store } from './store'
+
+createApp(App).use(router).use(store).mount('#app')
+```
+
+#### 创建user
+
+`pinia的优点，actions可以放异步操作和同步操作`
+
+```js
+import { defineStore } from 'pinia'
+
+export const useUserStore = defineStore({
+  id: 'user', // id必填，且需要唯一
+  state: () => {
+    return {
+      name: '张三',
+    }
+  },
+  getters: {
+    fullName() {
+      return `尼古拉斯 ${this.name}`
+    },
+  },
+  // pinia 可以在actions中同时操作同步或异步
+  actions: {
+    // 同步修改
+    updateName(name) {
+      this.name = name
+    },
+    // 异步修改
+    asChangeName(name) {
+      setTimeout(() => {
+        this.name = name
+      }, 500);
+    },
+  },
+})
+
+```
+
+#### 引入和使用
+
+```vue
+//components/about.vue
+
+<script>
+import { computed, ref } from 'vue'
+import { useUserStore } from '../store/user.js'  //引入
+export default {
+  name: 'About',
+  setup() {
+    const userStore = useUserStore()
+    // const userName = computed(() => `尼古拉斯 ${userStore.name}`)  //这个使用的state
+    const userName = computed(() => userStore.fullName)	//这个使用的getters
+
+    const btnClick1 = () => {
+      userStore.updateName('王五')
+    }
+    const btnClick2 = () => {
+      userStore.updateName('李六')
+    }
+    const btnClick3 = () => {
+      userStore.asChangeName('丁七')	//这个是异步
+    }
+
+    return {
+      userName,
+      btnClick1,
+      btnClick2,
+      btnClick3,
+    }
+  },
+}
+</script>
+```
+
