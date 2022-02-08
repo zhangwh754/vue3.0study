@@ -1,16 +1,13 @@
 <template>
-  <Home :count="count" />
-  <button @click="increase">增加({{count}})</button>
-  <About />
+  <router-view />
 </template>
 
 <script setup>
-import About from './components/About.vue'
-import Home from './components/Home.vue'
 import { ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
-let count = ref(0)
-const increase = () => count.value++
+const router = useRouter()
+const route = useRoute()
 
 </script>
 
