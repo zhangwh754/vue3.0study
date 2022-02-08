@@ -5,6 +5,7 @@ import About from '../components/About.vue'
 
 // 2. 定义一些路由
 const routes = [
+  {path: '', redirect: '/about'},
   { path: '/about', component: About },
 ]
 

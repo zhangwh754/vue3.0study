@@ -196,3 +196,53 @@ export default {
 </script>
 ```
 
+### 4、✨Pinia的数据持久化
+
+#### 安装
+
+```sh
+npm i pinia-plugin-persist --save
+```
+
+#### 修改pinia store
+
+```js
+import { createPinia } from 'pinia'
+import piniaPluginPersist from 'pinia-plugin-persist'
+
+export const store = createPinia().use(piniaPluginPersist)
+```
+
+#### 持久化
+
+在对应的 store 里开启 persist 即可开启持久化
+
+```js
+import { defineStore } from 'pinia'
+
+export const useUserStore = defineStore({
+  id: 'user', // id必填，且需要唯一
+  state: () => {
+    return {
+      name: '张三',
+    }
+  },
+
+  // 开启数据缓存
+  persist: {
+    enabled: true,//默认存储sessionStorage中，以id: 'user'作为key
+    //也可以在 strategies 里自定义 key 值，并将存放位置由 sessionStorage 改为 localStorage。
+    strategies: [
+      {
+        key: 'my_user',
+        storage: localStorage,
+        paths: ['name'] //指定要持久化的state属性
+      }
+    ]
+  },
+})
+
+```
+
+<img src="./public/pinia持久化.png" alt="image" style="zoom:67%;" />
+

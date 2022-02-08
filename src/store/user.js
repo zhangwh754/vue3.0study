@@ -7,6 +7,20 @@ export const useUserStore = defineStore({
       name: '张三',
     }
   },
+
+  // 开启数据缓存
+  persist: {
+    enabled: true,//默认存储sessionStorage中，以id: 'user'作为key
+    //也可以在 strategies 里自定义 key 值，并将存放位置由 sessionStorage 改为 localStorage。
+    strategies: [
+      {
+        key: 'my_user',
+        storage: localStorage,
+        paths: ['name'] //指定要持久化的state属性
+      }
+    ]
+  },
+
   getters: {
     fullName() {
       return `尼古拉斯 ${this.name}`
@@ -22,7 +36,7 @@ export const useUserStore = defineStore({
     asChangeName(name) {
       setTimeout(() => {
         this.name = name
-      }, 500);
+      }, 500)
     },
   },
 })
