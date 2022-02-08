@@ -1,5 +1,5 @@
 <template>
-  <h1>pinia存储的数据：{{ userName }}</h1>
+  <h1 class="name">pinia存储的数据：{{ userName }}</h1>
   <button @click="btnClick1">修改王五</button>
   <button @click="btnClick2">修改李六</button>
   <div>
@@ -8,10 +8,13 @@
 </template>
 
 <script>
+
+console.log('测试自动删除log');
+
 import { computed, ref } from 'vue'
 import { useUserStore } from '../store/user.js'
 export default {
-  name: 'About',
+  name: 'Pinia',
   setup() {
     const userStore = useUserStore()
     // const userName = computed(() => `尼古拉斯 ${userStore.name}`)
@@ -36,3 +39,8 @@ export default {
   },
 }
 </script>
+<style scoped>
+  .name {
+    color: lightblue;
+  }
+</style>

@@ -51,11 +51,11 @@ script中的代码会被编译为setup中的内容
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 // 1. 定义路由组件.
-import About from '../components/About.vue'
+import Pinia from '../components/Pinia.vue'
 
 // 2. 定义一些路由
 const routes = [
-  { path: '/about', component: About },
+  { path: '/pinia', component: Pinia },
 ]
 
 // 3. 创建路由实例并传递 `routes` 配置
@@ -76,7 +76,7 @@ import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
 const route = useRoute()
 
-//router.push('/about')
+//router.push('/pinia')
 </script>
 ```
 
@@ -163,13 +163,13 @@ export const useUserStore = defineStore({
 #### 引入和使用
 
 ```vue
-//components/about.vue
+//components/pinia.vue
 
 <script>
 import { computed, ref } from 'vue'
 import { useUserStore } from '../store/user.js'  //引入
 export default {
-  name: 'About',
+  name: 'Pinia',
   setup() {
     const userStore = useUserStore()
     // const userName = computed(() => `尼古拉斯 ${userStore.name}`)  //这个使用的state
@@ -244,5 +244,5 @@ export const useUserStore = defineStore({
 
 ```
 
-<img src="./public/pinia持久化.png" alt="image" style="zoom:67%;" />
+<img src="./src/assets/pinia持久化.png" alt="image" style="zoom:67%;" />
 

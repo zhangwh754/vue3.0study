@@ -7,6 +7,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^0.25.0",
     "pinia": "^2.0.11",
     "pinia-plugin-persist": "0.0.93",
     "vue": "^3.2.25",
@@ -14,6 +15,8 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.0.0",
-    "vite": "^2.7.2"
+    "vite": "^2.7.2",
+    "mockjs": "^1.1.0",
+    "vite-plugin-mock": "^2.9.6"
   }
 }
