@@ -243,7 +243,7 @@ export const useUserStore = defineStore({
 
 ```
 
-![login_page](./public/img/pinia持久化.png)
+![login_page](./src/assets/img/pinia持久化.png)
 
 ### 5、✨vite的一些配置项
 
@@ -411,9 +411,9 @@ VITE_BASE_API=http://poetry.apiopen.top/sentences
 
 分别对应开发时与打包时
 
-![login_page](./public/img/开发时请求.png)
+![login_page](./src/assets/img/开发时请求.png)
 
-![login_page](./public/img/生产环境请求.png)
+![login_page](./src/assets/img/生产环境请求.png)
 
 #### gzip
 
@@ -432,7 +432,7 @@ export default {
 }
 ```
 
-![login_page](./public/img/gzip的应用.png)
+![login_page](./src/assets/img/gzip的应用.png)
 
 #### eslint、prettier代码格式化的配置
 
@@ -487,3 +487,5 @@ module.exports = {
 }
 ```
 
+### 6、🦄 迁移至typescript
+迁移至typescript

@@ -1,8 +1,8 @@
 <template>
   <div class="linkBox">
     <div class="linkItem" v-for="(item, index) in routerArr" :key="index">
-      <router-link tag="button" :to='{path: `${item}`}'>
-        <button>{{item}}</button>
+      <router-link tag="button" :to="{ path: `${item}` }">
+        <button>{{ item }}</button>
       </router-link>
     </div>
     <div v-for="item in 5" :key="item" class="linkItem placeHolder"></div>
@@ -10,23 +10,17 @@
   <router-view></router-view>
 </template>
 
-<script setup>
-  const routerArr = [
-    'mock',
-    'pinia',
-  ]
+<script setup lang="ts">
+const routerArr: string[] = ['mock', 'pinia']
 </script>
 
-
-
-<style scoped>
-  .linkBox {
-    display: flex;
-    justify-content: space-between;
-    align-self: center;
-    flex-wrap: wrap;
-    width: 600px;
-  }
+<style lang="scss" scoped>
+.linkBox {
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
+  flex-wrap: wrap;
+  width: 600px;
   .linkItem {
     display: flex;
     justify-content: center;
@@ -37,4 +31,5 @@
   .placeHolder {
     height: 0;
   }
+}
 </style>

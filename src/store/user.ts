@@ -22,18 +22,18 @@ export const useUserStore = defineStore({
   },
 
   getters: {
-    fullName() {
+    fullName():string {
       return `尼古拉斯 ${this.name}`
     },
   },
   // pinia 可以在actions中同时操作同步或异步
   actions: {
     // 同步修改
-    updateName(name) {
+    updateName(name:string) {
       this.name = name
     },
     // 异步修改
-    asChangeName(name) {
+    asChangeName(name:string) {
       setTimeout(() => {
         this.name = name
       }, 500)
