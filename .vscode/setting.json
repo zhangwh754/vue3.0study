@@ -1,0 +1,72 @@
+{
+  "sync.gist": "f67e9afbab788c5e3c4a1bec0ef05915",
+  "vsicons.dontShowNewVersionMessage": true,
+  "editor.tabSize": 2,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "explorer.confirmDelete": false,
+  "terminal.integrated.tabs.enabled": true,
+  "vetur.validation.template": false,
+  "path-intellisense.mappings": {},
+  "open-in-browser.default": "Chrome",
+  "security.workspace.trust.untrustedFiles": "open",
+  "vetur.completion.scaffoldSnippetSources": {
+    "workspace": "💼",
+    "user": "🗒️",
+    "vetur": "✌"
+  },
+  "vetur.experimental.templateInterpolationService": true,
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "vetur.validation.interpolation": false,
+  "explorer.confirmDragAndDrop": false,
+  "eslint.run": "onSave",
+  "git.confirmSync": false,
+  "files.associations": {
+    "*.cjson": "jsonc",
+    "*.wxss": "css",
+    "*.wxs": "javascript",
+    "*.vue": "vue"
+  },
+  "emmet.includeLanguages": {
+    "wxml": "html"
+  },
+  "minapp-vscode.disableAutoConfig": true,
+  "prettier.semi": false,
+  "prettier.bracketSpacing": true,
+  "prettier.arrowParens": "avoid",
+  "prettier.singleQuote": true,
+  "prettier.printWidth": 100,
+  "workbench.startupEditor": "none",
+  "vetur.format.defaultFormatterOptions": {
+    "prettier": {
+      "wrap_line_length": 0,
+      "wrap_attributes": "auto",
+      "end_with_newline": true,
+      "semi": false,
+      "singleQuote": true
+    }
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "files.autoSave": "onFocusChange",
+  "minapp-vscode.wxmlFormatter": "prettier",
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.detectIndentation": false,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "vetur.validation.script": false,
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "workbench.iconTheme": "vscode-icons",
+  "liveServer.settings.host": "localhost",
+  "editor.insertSpaces": false
+}

@@ -2,9 +2,6 @@
 
 ### 1、🔧基本构建
 
-#### 部署地址
-在线浏览：https://zhangwh754.github.io/vue3.0study/
-
 #### 项目创建
 
 使用vite创建了项目（本项目为vue3.0）
@@ -51,11 +48,11 @@ script中的代码会被编译为setup中的内容
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 // 1. 定义路由组件.
-import About from '../components/About.vue'
+import Pinia from '../components/Pinia.vue'
 
 // 2. 定义一些路由
 const routes = [
-  { path: '/about', component: About },
+  { path: '/pinia', component: Pinia },
 ]
 
 // 3. 创建路由实例并传递 `routes` 配置
@@ -76,7 +73,7 @@ import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
 const route = useRoute()
 
-//router.push('/about')
+//router.push('/pinia')
 </script>
 ```
 
@@ -95,8 +92,10 @@ export default defineConfig({
     port: 3400,
     open: true,
   },
-  "resolve.alias": {
-    '/@/': resolve(__dirname, '@'), //把src改为@
+  resolve: {
+	alias: {
+	  '@': resolve(__dirname, 'src'), //把src改为@
+	},
   },
 })
 ```
@@ -163,13 +162,13 @@ export const useUserStore = defineStore({
 #### 引入和使用
 
 ```vue
-//components/about.vue
+//components/pinia.vue
 
 <script>
 import { computed, ref } from 'vue'
 import { useUserStore } from '../store/user.js'  //引入
 export default {
-  name: 'About',
+  name: 'Pinia',
   setup() {
     const userStore = useUserStore()
     // const userName = computed(() => `尼古拉斯 ${userStore.name}`)  //这个使用的state
@@ -244,5 +243,247 @@ export const useUserStore = defineStore({
 
 ```
 
-<img src="./public/pinia持久化.png" alt="image" style="zoom:67%;" />
+![login_page](./public/img/pinia持久化.png)
+
+### 5、✨vite的一些配置项
+
+#### 打包配置公共路径
+
+默认为/，修改为./可以解决服务器路径问题
+
+```js
+//vite.config.js
+export default defineConfig({
+  base: './',
+})
+```
+
+#### 图片别名配置
+
+```js
+//vite.config.js
+export default defineConfig({
+  resolve: {
+	alias: {
+	  '@': resolve(__dirname, 'src'), //把src改为@
+	  '/img': './src/assets/img'	//图片的别名配置
+	},
+  },
+})
+```
+
+#### 打包自动移除log
+
+```js
+//vite.config.js
+export default defineConfig({
+  build: {
+    minify: 'terser',
+    terserOptions: {
+	  compress: {
+	    //生产环境移除console
+	    drop_console: true,
+	    drop_debugger: true
+	  }
+    }
+  },
+})
+```
+
+#### element-plus自动按需引入
+
+```sh
+npm install element-plus --save
+
+npm install -D unplugin-vue-components unplugin-auto-import
+```
+
+```js
+// vite.config.js
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+
+export default {
+  plugins: [
+    // ...
+    AutoImport({
+      resolvers: [ElementPlusResolver()],
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()],
+    }),
+  ],
+}
+```
+
+#### Mock的配置
+
+```sh
+npm i vite-plugin-mock mockjs  -D
+```
+
+```js
+export default {
+  plugins: [
+    viteMockServe({
+      mockPath: './src/mock',
+      supportTs: true, // 打开后，可以读取 ts 文件模块。 请注意，打开后将无法监视.js 文件。
+      watchFiles: true, // 监视文件更改
+    })
+  ],
+}
+```
+
+```ts
+//./src/mock/index.ts
+// test.js 仅做示例: 通过GET请求返回一个对象数组，包含人名和年龄
+import { MockMethod } from 'vite-plugin-mock'
+import { mock } from 'mockjs'
+
+function randomData() {
+  return mock({
+    name: '@cname',
+    'from|1-100': 100
+  })
+}
+
+export default [
+  {
+    url: "/api/getUser",
+    method: "get",
+    response: () => {
+      return {
+        code: 200,
+        message: "ok",
+        data: randomData()
+      };
+    }
+  }
+] as MockMethod[]
+```
+
+返回的数据实例
+
+```json
+{"code":200,"message":"ok","data":{"name":"孙明","from":52}}
+```
+
+#### proxy前端配置代理
+
+```js
+export default {
+  server: {
+    port: 3400,
+	open: true,
+	proxy: {
+	// 代理配置
+	  //'/cors': 'http://127.0.0.1:8080/',  //两种都可以
+	  '/cors': {
+		target: 'http://127.0.0.1:8080/',
+		changeOrigin: true,
+		rewrite: (path) => path.replace(/^\/cors/, '')
+	  },
+	},
+  },
+}
+```
+
+```js
+async function getMockData() {
+  //调用node接口，跨域，在vite.config中配置跨域
+  const { data } = await axios.post('/cors')  
+  console.log(data);
+}
+```
+
+#### env环境变量的配置
+
+```js
+//.env.development	//最外层和src同级
+VITE_BASE_API=/api/getUser
+```
+
+```js
+//.env.production	//最外层和src同级
+VITE_BASE_API=http://poetry.apiopen.top/sentences
+```
+
+分别对应开发时与打包时
+
+![login_page](./public/img/开发时请求.png)
+
+![login_page](./public/img/生产环境请求.png)
+
+#### gzip
+
+```sh
+npm i vite-plugin-compression -D
+```
+
+```js
+// vite.config.js
+import viteCompression from 'vite-plugin-compression';
+
+export default {
+  plugins: [
+    viteCompression(),
+  ],
+}
+```
+
+![login_page](./public/img/gzip的应用.png)
+
+#### eslint、prettier代码格式化的配置
+
+```js
+//./src/.eslintrc.js
+module.exports = {
+  root: true,
+  env: {
+    browser: true,
+    node: true,
+    es6: true,
+  },
+  extends: [
+    'plugin:vue/vue3-essential',
+    'eslint:recommended',
+    '@vue/typescript/recommended',
+    '@vue/prettier',
+    // '@vue/prettier/@typescript-eslint',
+  ],
+  parserOptions: {
+    ecmaVersion: 2020,
+    sourceType: 'module',
+  },
+  rules: {
+    'prettier/prettier': 'error',
+    '@typescript-eslint/no-explicit-any': ['off'],
+    '@typescript-eslint/indent': ['off'],
+    '@typescript-eslint/no-unused-vars': ['error'],
+  },
+  globals: {
+    defineProps: 'readonly',
+    defineEmits: 'readonly',
+    defineComponent: 'readonly',
+    defineExpose: 'readonly',
+  },
+}
+```
+
+```js
+//./src/prettierrc.js
+module.exports = {
+    printWidth: 80,
+    tabWidth: 2,
+    useTabs: false,
+    singleQuote: true,
+    semi: false,
+    trailingComma: 'es5',
+    bracketSpacing: true,
+    jsxBracketSameLine: false,
+    arrowParens: 'avoid',
+    endOfLine: 'auto',
+}
+```
 
