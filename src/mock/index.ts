@@ -1,14 +1,13 @@
-// test.js 仅做示例: 通过GET请求返回一个名字数组
+// test.js 仅做示例: 通过GET请求返回一个对象数组，包含人名和年龄
 import { MockMethod } from 'vite-plugin-mock'
-import { mock, Random } from 'mockjs'
-const data = mock({
-  'list|10': [
-    {
-      name: '@cname',
-      'age|1-100': 100
-    }
-  ]
-})
+import { mock } from 'mockjs'
+
+function randomData() {
+  return mock({
+    name: '@cname',
+    'from|1-100': 100
+  })
+}
 
 export default [
   {
@@ -18,7 +17,7 @@ export default [
       return {
         code: 200,
         message: "ok",
-        data
+        data: randomData()
       };
     }
   }
